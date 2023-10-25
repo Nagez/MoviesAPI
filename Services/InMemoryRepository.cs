@@ -17,8 +17,9 @@ namespace MoviesAPI.Services
             };
         }
 
-        public List<Genre> GetAllGenres()
+        public async Task<List<Genre>> GetAllGenres()
         {
+            await Task.Delay(1000); // 1sec async wait
             return genres;
         }
         public Genre GetGenreById(int Id)

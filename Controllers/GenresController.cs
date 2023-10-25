@@ -19,21 +19,28 @@ namespace MoviesAPI.Controllers
         [HttpGet] // api/genres
         [HttpGet("list")] // api/genres/list (multiple routing options)
         [HttpGet("/allgenres")] // starting with a / over write the main routing
-        public List<Genre> Get()
+        public async Task<List<Genre>> Get()
         {
-            return repository.GetAllGenres();
+            return await repository.GetAllGenres();
         }
 
+
         [HttpGet("{Id:int}/{param=API}")] // 2 parameters, first with type constaint and second with a default value
-        public Genre Get(int id, string param)
+        public ActionResult<Genre> Get(int id, string param) //ActionResult types represent various HTTP status codes
         {
             var genre = repository.GetGenreById(id);
 
             if (genre == null) {
-                //return NotFound()
+                return NotFound();
              };
 
             return genre;
+        }
+
+        [HttpPost]
+        public IActionResult Post()
+        {
+            return NoContent();
         }
     }
 }
