@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Entities;
-
+using MoviesAPI.Services;
 
 namespace MoviesAPI.Controllers
 {
@@ -8,26 +8,18 @@ namespace MoviesAPI.Controllers
     [Route("api/genres")]
     public class GenresController : ControllerBase
     {
-        private List<Genre> genres;
+        
+        private readonly IRepository repository;
 
-        private readonly ILogger<GenresController> _logger;
-
-        public GenresController(ILogger<GenresController> logger)
+        public GenresController(IRepository repository)
         {
-            _logger = logger;
-
-            genres = new List<Genre>()
-            {
-                new Genre { Id = 1, Name = "Action" },
-                new Genre { Id = 2, Name = "Comedy" },
-                new Genre { Id = 3, Name = "Drama" },
-            };
+            this.repository = repository;
         }
 
         [HttpGet]
         public List<Genre> Get()
         {
-            return genres;
+            return repository.GetAllGenres();
         }
     }
 }
