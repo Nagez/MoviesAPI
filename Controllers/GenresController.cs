@@ -38,8 +38,14 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public ActionResult Post([FromBody] Genre genre) //requre the parameter to come from the body only
         {
+            /* not required if using [apicontroller]
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            */
             return NoContent();
         }
     }
