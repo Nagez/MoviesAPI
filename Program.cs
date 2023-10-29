@@ -10,6 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
+//by using singleton we will get the same instance of the InMemoryRepository class in the lifetime of the application
+//in a scope service we will get the same instance in the same http request (this protect the db context of another http request)
+//in a transient option we get diffrent instance of the class even in the same http request
 
 var app = builder.Build();
 

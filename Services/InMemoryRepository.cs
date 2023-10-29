@@ -26,6 +26,12 @@ namespace MoviesAPI.Services
         {
             return genres.FirstOrDefault(x => x.Id == Id); ;
         }
+
+        public void AddGenre(Genre genre)
+        {
+            genre.Id = genres.Max(x => x.Id) + 1;
+            genres.Add(genre);
+        }
     }
 
 }

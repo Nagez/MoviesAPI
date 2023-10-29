@@ -46,7 +46,11 @@ namespace MoviesAPI.Controllers
                 return BadRequest(ModelState);
             }
             */
+
+            repository.AddGenre(genre);
             return NoContent();
         }
+
+      
     }
 }
