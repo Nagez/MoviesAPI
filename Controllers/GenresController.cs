@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Entities;
+using MoviesAPI.Filters;
 using MoviesAPI.Services;
 
 namespace MoviesAPI.Controllers
@@ -21,6 +22,8 @@ namespace MoviesAPI.Controllers
         [HttpGet] // api/genres
         [HttpGet("list")] // api/genres/list (multiple routing options)
         [HttpGet("/allgenres")] // starting with a / over write the main routing
+        [ResponseCache(Duration = 60)]
+        [ServiceFilter(typeof(MyActionFilter))]
         public async Task<List<Genre>> Get()
         {
             logger.LogInformation("Getting all the genres");
@@ -29,6 +32,7 @@ namespace MoviesAPI.Controllers
 
 
         [HttpGet("{Id:int}/{param=API}")] // 2 parameters, first with type constaint and second with a default value
+        [ServiceFilter(typeof(MyActionFilter))]
         public ActionResult<Genre> Get(int id, string param) //ActionResult types represent various HTTP status codes
         {
             logger.LogDebug("Get Genre by id executing..");
@@ -36,6 +40,7 @@ namespace MoviesAPI.Controllers
 
             if (genre == null) {
                 logger.LogWarning($"Genre with Id {id} not found");
+                //throw new ApplicationException(); //exception test
                 return NotFound();
              };
 
