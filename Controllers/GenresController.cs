@@ -10,31 +10,30 @@ namespace MoviesAPI.Controllers
     public class GenresController : ControllerBase
     {
         
-        private readonly IRepository repository;
         private readonly ILogger logger;
 
-        public GenresController(IRepository repository, ILogger<GenresController> logger)
+        public GenresController(ILogger<GenresController> logger)
         {
-            this.repository = repository;
             this.logger = logger;
         }
 
         [HttpGet] // api/genres
-        [HttpGet("list")] // api/genres/list (multiple routing options)
-        [HttpGet("/allgenres")] // starting with a / over write the main routing
-        [ResponseCache(Duration = 60)]
-        [ServiceFilter(typeof(MyActionFilter))]
+        //[HttpGet("list")] // api/genres/list (multiple routing options)
+        //[HttpGet("/allgenres")] // starting with a / over write the main routing
+        //[ResponseCache(Duration = 60)]
+        //[ServiceFilter(typeof(MyActionFilter))]
         public async Task<List<Genre>> Get()
         {
             logger.LogInformation("Getting all the genres");
-            return await repository.GetAllGenres();
+            return new List<Genre>() { new Genre() { Id = 1, Name = "comedy" } };
         }
 
 
-        [HttpGet("{Id:int}/{param=API}")] // 2 parameters, first with type constaint and second with a default value
-        [ServiceFilter(typeof(MyActionFilter))]
+        [HttpGet("{Id:int}", Name ="getGenre")] // 2 parameters, first with type constaint and second with a default value
+        //[ServiceFilter(typeof(MyActionFilter))]
         public ActionResult<Genre> Get(int id, string param) //ActionResult types represent various HTTP status codes
         {
+            /*
             logger.LogDebug("Get Genre by id executing..");
             var genre = repository.GetGenreById(id);
 
@@ -45,6 +44,8 @@ namespace MoviesAPI.Controllers
              };
 
             return genre;
+            */
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -55,12 +56,26 @@ namespace MoviesAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            */
+            
 
             repository.AddGenre(genre);
             return NoContent();
+            */
+            throw new NotImplementedException();
+
         }
 
-      
+        [HttpPut]
+        public ActionResult Put([FromBody] Genre genre)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete]
+        public ActionResult Delete() 
+        { 
+            throw new NotImplementedException(); 
+        }
+
     }
 }
